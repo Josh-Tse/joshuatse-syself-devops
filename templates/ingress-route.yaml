@@ -1,0 +1,16 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{ .Release.Name }}-ingressroute
+  namespace: example-app
+spec:
+  entryPoints:
+  - websecure
+  - web
+  routes:
+    - match: {{ .Values.ingress.route }}
+      kind: Rule
+      middlewares: {{ .Values.ingress.route }}
+      services:
+      - name: {{ .Values.ingress.name }}
+        port: {{ .Values.ingress.port }}
